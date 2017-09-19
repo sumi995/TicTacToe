@@ -38,6 +38,7 @@ namespace TicTacToe
         public void SetValueAt(int x, int y, CrossDots value)
         {
             _grid[x, y] = value;
+            _grid[y, x] = value;
         }
     }
 }
