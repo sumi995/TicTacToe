@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace TicTacToe
 {
@@ -12,13 +14,24 @@ namespace TicTacToe
     public class Grid
     {
         private CrossDots[,] _grid;
+        public CrossDots this[int x, int y]
+        {
+            get
+            {
+                return _grid[x, y];
+            }
+            set
+            {
+                _grid[x, y] = value;    
+            }
+        }
 
         public Grid()
         {
             _grid = new CrossDots[3, 3];
         }
 
-        public bool GridIsEmpty()
+        internal bool GridIsEmpty()
         {
             foreach (CrossDots val in _grid)
             {
@@ -30,15 +43,22 @@ namespace TicTacToe
             return true;
         }
 
-        public CrossDots GetValueAt(int x, int y)
+        internal List<Tuple<int, int>> GetPopulatedCoord()
         {
-            return _grid[x, y];
+            var populatedCoord = new List<Tuple<int, int>>();
+            for (int i = 0; i < _grid.GetLength(0); i++)
+            {
+                for (int j = 0; j < _grid.GetLength(1); j++)
+                {
+                    if (_grid[i, j] != 0)
+                    {
+                        populatedCoord.Add(new Tuple<int, int>(i, j));
+                    }
+
+                }
+            }
+            return populatedCoord;
         }
 
-        public void SetValueAt(int x, int y, CrossDots value)
-        {
-            _grid[x, y] = value;
-            _grid[y, x] = value;
-        }
     }
 }
